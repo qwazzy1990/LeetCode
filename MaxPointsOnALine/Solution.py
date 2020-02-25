@@ -47,8 +47,6 @@ if __name__ == "__main__":
 
     
     points = []
-    
-
     fName = sys.argv[1]
     fileObj = open(fName, "r")
     for line in fileObj:
