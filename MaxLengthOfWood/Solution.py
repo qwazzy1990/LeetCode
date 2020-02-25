@@ -36,7 +36,17 @@ class Solution:
 
 
 if __name__ == "__main__":
-    l = [232, 124, 456]
-    k = 7
+
+    file = open(sys.argv[1], "r")
+    l = []
+    k = -1
+    first = True
+    for line in file:
+        if first == True:
+            k = int(str(line).rstrip())
+            first = False
+        else:
+            l.append(int(str(line).rstrip()))
+    
     s = Solution()
     print(s.solution(l, k))

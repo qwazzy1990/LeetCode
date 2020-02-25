@@ -4,6 +4,8 @@
 
 
 ## Algorithm
-## while(floor(arr[0]/count + ...  floor(arr[i])/count + ...floor(arr[n])/count > K)
-## count ++
+## while(floor(arr[0]/count + ...  floor(arr[i])/count + ...floor(arr[n])/count < K)
+## count--
 
+## To Run:
+## Type make
