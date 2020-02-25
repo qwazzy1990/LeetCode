@@ -12,8 +12,9 @@ class Solution:
         pass 
 
     def solution(self, dividends:[], k:int):
-        ## Set the divisor to some massive number
-        divisor = 10000
+        ## Set the divisor to largest dividend +1
+        dividends.sort(reverse=True)
+        divisor = dividends[0]+1
         ##while the sum of the quotients is lesss than k
         ##continue to reduce the divisor
         while(self.sumOfQuotients(dividends, divisor) < k):
@@ -35,7 +36,7 @@ class Solution:
 
 
 if __name__ == "__main__":
-    l = [5, 9, 11]
-    k = 6
+    l = [232, 124, 456]
+    k = 7
     s = Solution()
     print(s.solution(l, k))
