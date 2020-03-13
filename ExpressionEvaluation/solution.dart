@@ -1,7 +1,7 @@
 void main() {
   List operations = ['-', '+', '*', '/', '('];
   String operation = operations.removeLast();
-  String s = '2+4/2*(7*4-2)';
+  String s = "3*3*3*3*(8/7.5)-5";
   s = driver(s, operation, operations);
   print(s);
 }
@@ -21,38 +21,31 @@ String driver(string, operation, List operations) {
       //result is the result of the operation
       double result = -1;
 
+      int leftIndex = getLeftIndex(string, i-1);
+      int rightIndex = getRightIndx(string, i+1); 
+      String leftVal = string.substring(leftIndex, i);
+      String rightVal = string.substring(i+1, rightIndex+1);
+      double left = double.tryParse(leftVal);
+      double right = double.tryParse(rightVal);
       //if dividing
       if (operation == '/') {
-        String leftVal = string[i - 1];
-        String rightVal = string[i + 1];
-        int left = int.tryParse(leftVal);
-        int right = int.tryParse(rightVal);
-        result = left / right;
+
+        result = left / right.toDouble();
       } 
       
       //multiply
       else if (operation == '*') {
-        String leftVal = string[i - 1];
-        String rightVal = string[i + 1];
-        int left = int.tryParse(leftVal);
-        int right = int.tryParse(rightVal);
+
         result = (left * right).toDouble();
       } 
       
       //add
       else if (operation == '+') {
-        String leftVal = string[i - 1];
-        String rightVal = string[i + 1];
-        int left = int.tryParse(leftVal);
-        int right = int.tryParse(rightVal);
+        
         result = (left + right).toDouble();
       } 
       //subtract
       else if (operation == '-') {
-        String leftVal = string[i - 1];
-        String rightVal = string[i + 1];
-        int left = int.tryParse(leftVal);
-        int right = int.tryParse(rightVal);
         result = (left - right).toDouble();
       } 
       //bracket
@@ -61,31 +54,59 @@ String driver(string, operation, List operations) {
         String newString = string.substring(i + 1, index);
         List newOps = operations.map((element) => element).toList();
         newString = driver(newString, operation, newOps);
-        print(newString);
         String ss = string.substring(i, index + 1);
         string = string.replaceAll(ss, newString);
       }
 
       //get the substrin to replace in string
       if (operation != '(') {
-        String ss = string.substring(i - 1, i + 2);
+        String ss = string.substring(leftIndex, rightIndex+1);
         //replace the substring with the result as string
         string = string.replaceAll(ss, result.toString());
       }
     } //end if
 
   } //end for
-  //operation = operations.removeLast();
-  print(string);
-  string = driver(string, operation = operations.removeLast(), operations);
+
+  if(!(operations.isEmpty)){
+    operation = operations.removeLast();
+    string = driver(string, operation, operations);
+  }
   return string;
 }
+
+
+int getLeftIndex(String s, int start)
+{
+  for(int i = start; i >=0; i--)
+  {
+    if(!(s.codeUnitAt(i) ^ 0x30 <= 9) && !(s[i] == '.'))
+    {
+      return i+1;
+    }
+  }
+  return 0;
+}
+
+int getRightIndx(String s, int start)
+{
+
+  for(int i = start; i < s.length; i++)
+  {
+    if(!(s.codeUnitAt(i) ^ 0x30 <= 9) && !(s[i] == '.'))
+    {
+      return i-1;
+    }
+  }
+   return s.length-1;
+  
+ }
 
 bool isNumeric(String s) {
   if (s == null) {
     return false;
   }
-  if (double.tryParse("hello") != null) {
+  if (double.tryParse(s) != null) {
     return true;
   } else {
     return false;
@@ -101,6 +122,5 @@ int getIndex(String s, String char, int start) {
   return -1;
 }
 
-void printf(msg) {
-  print(msg);
-}
+
+
