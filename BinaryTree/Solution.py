@@ -106,7 +106,6 @@ class Tree:
 
     ##print the tree
     def printTree(self, node):
-        print("node is "+ str(node))
         if node == None:
             return
     
@@ -115,6 +114,24 @@ class Tree:
         self.printTree(node.rightChild)
 
 
+    def inOrder(self, node):
+        ##if at a leaf
+        if node.leftChild == None and node.rightChild == None:
+            print(node.val)
+            return node
+        
+        ##if at a non leaf with no left child
+        elif node.leftChild == None and node.rightChild != None:
+            print(node.val)
+            rightChild = self.inOrder(node.rightChild)
+            return rightChild
+
+        else:
+            leftChild = self.inOrder(node.leftChild)
+            print(node.val)
+
+            rightChild = self.inOrder(node.rightChild)
+            ##print(rightChild.val)
 
 if __name__ == "__main__":
 
@@ -124,6 +141,4 @@ if __name__ == "__main__":
     tree.insert(tree.root, 9)
     tree.insert(tree.root, 11)
     tree.insert(tree.root, 4)
-    ##tree.printTree(tree.root)
-    tree.remove(tree.root, 5)
-    tree.printTree(tree.root)
+    tree.inOrder(tree.root)
